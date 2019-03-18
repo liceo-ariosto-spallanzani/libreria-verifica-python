@@ -5,12 +5,12 @@ with open("README.md", 'r') as f:
 
 setup(
    name='verifica',
-   version='0.1',
-   description='A useful module',
+   version='1.0',
+   description='programma per verifiche Liceo Ariosto Spallanzani',
    license="MIT",
    long_description=long_description,
-   author='Man Foo',
-   author_email='br1gioca@gmail.com',
+   author='Giovanni Bruno',
+   author_email='br1giova@gmail.com',
    packages=['verifica'],
    install_requires=['requests'],
 )
