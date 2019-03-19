@@ -1,6 +1,5 @@
 from verifica import Verifica
 
-Verifica.url = "http://localhost:8080"
 Verifica.firma("Giovanni", "Bruno")
 
 Verifica.stampa_esercizi()
