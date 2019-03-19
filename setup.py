@@ -4,13 +4,13 @@ with open("README.md", 'r') as f:
     long_description = f.read()
 
 setup(
-   name='verifica',
-   version='1.2',
+   name='spalla',
+   version='1.0',
    description='programma per verifiche Liceo Ariosto Spallanzani',
    license="MIT",
    long_description=long_description,
    author='Giovanni Bruno',
    author_email='br1giova@gmail.com',
-   packages=['verifica'],
+   packages=['spalla'],
    install_requires=['requests'],
 )

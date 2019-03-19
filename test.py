@@ -1,4 +1,4 @@
-from verifica import Verifica
+from spalla import Verifica
 
 Verifica.firma("Giovanni Bruno")
 
