@@ -1,6 +1,6 @@
 from verifica import Verifica
 
-Verifica.firma("Giovanni", "Bruno")
+Verifica.firma("Giovanni Bruno")
 
 Verifica.stampa_esercizi()
 

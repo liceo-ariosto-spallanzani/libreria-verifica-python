@@ -27,10 +27,10 @@ class Verifica:
     url = "http://192.168.1.231:8080"
 
     @staticmethod
-    def firma(nome, cognome):
+    def firma(nome):
         r = requests.post(
             "{}/accreditamento".format(Verifica.url),
-            json={"nome": "{} {}".format(nome.upper(), cognome.upper())}
+            json={"nome": nome.upper()}
         ).json()
 
         print(r["message"])
