@@ -2,48 +2,63 @@ import requests
 
 
 class Esercizio:
-    def __init__(self, verifica, numero, testo, dati):
-        self.verifica = verifica
+    def __init__(self, numero, testo, dati):
         self.numero = numero
         self.testo = testo
         self.dati = dati
 
     def consegna(self, risultato):
         r = requests.post(
-            self.verifica.get_url("esercizi/{}".format(self.numero)),
+            "{}/esercizi/{}".format(Verifica.url, self.numero),
             headers={"x-data": "True"},
             json={"data": risultato}
-        ).json()
+        )
 
-        print(r["status"])
+        if r.status_code == 200:
+            print(r.json()["message"])
+        else:
+            raise Exception(r.json()["message"])
 
     def __str__(self):
         return "{}\nDATI:\n{}".format(self.testo, self.dati)
 
 
 class Verifica:
-    def __init__(self, nome, cognome, ip="192.168.1.231", port=8080):
-        self.nome = nome
-        self.cognome = cognome
-        self.ip = ip
-        self.port = port
+    url = "http://192.168.1.231:8080"
 
-        self.__firma()
+    @staticmethod
+    def firma(nome, cognome):
+        r = requests.post(
+            "{}/accreditamento".format(Verifica.url),
+            json={"nome": "{} {}".format(nome.upper(), cognome.upper())}
+        ).json()
 
-    def get_url(self, path):
-        return "{}:{}/{}".format(self.ip, self.port, path)
+        print(r["message"])
 
-    def __firma(self):
-        requests.post(
-            self.get_url("accreditamento"),
-            json={"nome": "{} {}".format(self.nome.upper(), self.cognome.upper())}
+    @staticmethod
+    def stampa_esercizi():
+        r = requests.get("{}/esercizi".format(Verifica.url)).json()
+        for i in range(len(r)):
+            e = r[i]
+            print("- {}: {} (+{})".format(i+1, e["message"], e["points"]))
+
+    @staticmethod
+    def stampa_voto():
+        r = requests.get("{}/risultati".format(Verifica.url)).json()
+        if type(r) == dict:
+            print(r["score"])
+        else:
+            print(r)
+
+    @staticmethod
+    def inizia_esercizio(numero):
+        r = requests.get(
+            "{}/esercizi/{}".format(Verifica.url, numero),
+            headers={"x-data": "True"}
         )
 
-    def stampa_voto(self):
-        r = requests.get(self.get_url("risultati"))
-        print("{}/10".format(r.json()[0]["score"]))
-
-    def inizia_esercizio(self, numero):
-        r = requests.get(self.get_url("esercizi/{}".format(numero)), headers={"x-data": "True"}).json()
-
-        return Esercizio(self, numero, r["message"], r["data"])
+        if r.status_code != 200:
+            raise Exception(r.json()["message"])
+        else:
+            body = r.json()
+            return Esercizio(numero, body["message"], body["data"])

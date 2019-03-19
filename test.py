@@ -1,17 +1,12 @@
 from verifica import Verifica
 
-verifica = Verifica("Giovanni", "Bruno", "http://localhost")
+Verifica.url = "http://localhost:8080"
+Verifica.firma("Giovanni", "Bruno")
 
-esercizio = verifica.inizia_esercizio(2)
-dati = esercizio.dati
+Verifica.stampa_esercizi()
 
-m = min(dati)
-for i in range(len(dati)):
-    dati[i] *= m
+es = Verifica.inizia_esercizio(1)
+print(es)
 
-esercizio.consegna(dati)
-print(esercizio)
-
-
-verifica.print_voto()
-
+es.consegna(sum(es.dati))
+Verifica.stampa_voto()
