@@ -44,9 +44,10 @@ class Verifica:
 
     @staticmethod
     def stampa_voto():
-        r = requests.get("{}/risultati".format(Verifica.url)).json()
+        r = requests.get("{}/risultati".format(Verifica.url))
+
         if type(r) == dict:
-            print(r["score"])
+            print(r.json().get("score", 0))
         else:
             print(r)
 
