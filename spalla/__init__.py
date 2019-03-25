@@ -49,7 +49,7 @@ class Verifica:
         if type(r) == dict:
             print(r.json().get("score", 0))
         else:
-            print(r)
+            print(r.json())
 
     @staticmethod
     def inizia_esercizio(numero):
