@@ -60,5 +60,13 @@ class Verifica:
         if r.status_code != 200:
             raise Exception(r.json()["message"])
         else:
-            body = r.json()
+            try:
+                body = r.json()
+            except:
+                t = r.text()
+                try:
+                    body = float(t)
+                except:
+                    body = t
+
             return Esercizio(numero, body["message"], body["data"])
