@@ -1,6 +1,5 @@
 import requests
 
-
 class Esercizio:
     def __init__(self, numero, testo, dati):
         self.numero = numero
@@ -44,12 +43,8 @@ class Verifica:
 
     @staticmethod
     def stampa_voto():
-        r = requests.get("{}/risultati".format(Verifica.url))
-
-        if type(r) == dict:
-            print(r.json().get("score", 0))
-        else:
-            print(r.json())
+        r = requests.get("{}/voto".format(Verifica.url))
+        print(r.json().get("score", 0))
 
     @staticmethod
     def inizia_esercizio(numero):
@@ -61,13 +56,5 @@ class Verifica:
         if r.status_code != 200:
             raise Exception(r.json()["message"])
         else:
-            try:
-                body = r.json()
-            except:
-                t = r.text()
-                try:
-                    body = float(t)
-                except:
-                    body = t
-
+            body = r.json()
             return Esercizio(numero, body["message"], body["data"])
