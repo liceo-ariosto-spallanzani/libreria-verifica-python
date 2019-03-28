@@ -1,4 +1,6 @@
 import requests
+import json
+
 
 class Esercizio:
     def __init__(self, numero, testo, dati):
@@ -19,7 +21,7 @@ class Esercizio:
             raise Exception(r.json()["message"])
 
     def __str__(self):
-        return "{}\nDATI:\n{}".format(self.testo, self.dati)
+        return "{}\nDATI:\n{}".format(self.testo, json.dumps(self.dati, indent=4))
 
 
 class Verifica:
