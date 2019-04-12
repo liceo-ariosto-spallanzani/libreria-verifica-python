@@ -141,6 +141,8 @@ class Game:
     elif self.status == Game.GAME_OVER:
       print("{}Hai perso!{}".format(Fg.red, Fg.rs))
 
+    print(__main__)
+
   def __str__(self):
     out = ""
     for y in range(self.h):
