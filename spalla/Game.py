@@ -1,3 +1,5 @@
+import __main__ 
+
 class Fg: 
     rs="\033[00m"
     black='\033[30m'
@@ -141,7 +143,7 @@ class Game:
     elif self.status == Game.GAME_OVER:
       print("{}Hai perso!{}".format(Fg.red, Fg.rs))
 
-    print(__main__)
+    #print(open(__main__.__file__).read().count(".move_right()"))
 
   def __str__(self):
     out = ""
