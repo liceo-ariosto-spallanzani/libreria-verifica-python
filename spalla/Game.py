@@ -34,10 +34,10 @@ class Bg:
 
 
 class Directions:
-    N = 0
-    S = 1
-    W = 2
-    E = 3
+    N = UP = 0
+    S = DOWN = 180
+    W = LEFT = 270
+    E = RIGHT = 90
 
 
 class Entity:
@@ -54,14 +54,40 @@ class Entity:
 
 
 class Player(Entity):
-    def __init__(self, game, x, y):
+    GRAPHICS = {
+        0: "^",
+        90: ">",
+        180: "v",
+        270: "<"
+    }
+
+    def __init__(self, game, x, y, direction):
         self.tail = [(x, y)]
-        Entity.__init__(self, "*", game, x, y, Fg.red, Bg.blue)
+        Entity.__init__(self, Player.GRAPHICS[direction], game, x, y, Fg.red, Bg.blue)
         self.tail_color = self.bg_color
         self.__moves = []
+        self.__direction = direction
+
+    def __set_direction(self, direction):
+        if direction == 360:
+            direction = 0
+        elif direction == -90:
+            direction = 270
+
+        self.__direction = direction
+        self.graphic = Player.GRAPHICS[direction]
 
     def get_moves(self):
         return self.__moves
+
+    def get_direction(self):
+        return self.__direction
+
+    def turn(self, direction):
+        if direction == Directions.RIGHT:
+            self.__set_direction(self.__direction + 90)
+        elif direction == Directions.LEFT:
+            self.__set_direction(self.__direction - 90)
 
     def move(self, direction):
         if self.game.running:
@@ -124,29 +150,26 @@ class Level:
                 if char == "$":
                     self.__entities.append(Gold(self, x, y))
                 elif char == "*":
-                    self.__player = Player(self, x, y)
+                    self.__player = Player(self, x, y, Directions.N)
                     self.__entities.insert(0, self.__player)
                 elif char != " ":
                     self.__entities.append(Obstacle(self, x, y))
 
-    def move_up(self):
-        self.__player.move(Directions.N)
+    def move(self):
+        self.__player.move(self.__player.get_direction())
 
-    def move_down(self):
-        self.__player.move(Directions.S)
+    def turn_left(self):
+        self.__player.turn(Directions.LEFT)
 
-    def move_left(self):
-        self.__player.move(Directions.W)
-
-    def move_right(self):
-        self.__player.move(Directions.E)
+    def turn_right(self):
+        self.__player.turn(Directions.RIGHT)
 
     def get_entity_at_coords(self, x, y):
         for e in self.__entities:
             if e.x == x and e.y == y: 
                 return e     
 
-    def play(self):
+    def go(self):
         print(self)
         code = open(__main__.__file__).read()
         r = requests.post("{}/solution/{}".format(Game.url, self.id), json={

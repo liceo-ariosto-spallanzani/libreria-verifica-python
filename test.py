@@ -1,13 +1,14 @@
 
 from spalla.Game import Game
-Game.url = "http://localhost:8080"
+Game.url = "http://localhost:8081"
 
-# Game.sign("Giovanni Bruno")
+Game.sign("Giovanni Bruno")
 
-level = Game.start_level(1)
+player = Game.start_level(1)
 
-level.move_right()
-level.move_right()
-level.move_right()
+player.turn_right()
+player.move()
+player.move()
+player.move()
 
-level.play()
+player.go()
