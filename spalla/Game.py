@@ -178,7 +178,7 @@ class Level:
 
 
 class Game:
-    url = "http://192.168.1.231:8080"
+    url = "http://192.168.1.231:8081"
 
     @staticmethod
     def sign(name):
