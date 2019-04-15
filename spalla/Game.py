@@ -149,8 +149,17 @@ class Level:
                 char = rows[y][x]
                 if char == "$":
                     self.__entities.append(Gold(self, x, y))
-                elif char == "*":
-                    self.__player = Player(self, x, y, Directions.N)
+                elif char in ("^", ">", "<", "v"):
+                    if char == "^":
+                        direction = Directions.UP
+                    elif char == ">":
+                        direction = Directions.RIGHT
+                    elif char == "<":
+                        direction = Directions.LEFT
+                    else:
+                        direction = Directions.DOWN
+
+                    self.__player = Player(self, x, y, direction)
                     self.__entities.insert(0, self.__player)
                 elif char != " ":
                     self.__entities.append(Obstacle(self, x, y))
