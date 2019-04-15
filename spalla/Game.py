@@ -89,6 +89,8 @@ class Player(Entity):
         elif direction == Directions.LEFT:
             self.__set_direction(self.__direction - 90)
 
+        self.__moves.append(direction)
+
     def move(self, direction):
         if self.game.running:
             next_x = self.x
@@ -131,8 +133,9 @@ class Level:
 
         res = requests.get("{}/levels".format(Game.url), headers={"Accept": "application/json"})
         levels = res.json()
-        level_data = list(levels.values())[self.__level_index]
-        self.id = list(levels.keys())[self.__level_index]
+        level_data = levels[self.__level_index]
+
+        self.id = self.__level_index
         self.description = level_data["description"]
         self.max_moves = level_data["maxMoves"]
         rows = level_data["map"].split("\n")

@@ -3,10 +3,7 @@ Game.url = "http://localhost:8081"
 
 Game.sign("Giovanni Bruno")
 
-player = Game.start_level(1)
-player.turn_left()
-player.move()
-player.turn_right()
+player = Game.start_level(3)
 player.move()
 player.move()
 player.turn_right()
