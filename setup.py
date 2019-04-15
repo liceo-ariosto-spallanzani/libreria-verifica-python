@@ -5,7 +5,7 @@ with open("README.md", 'r') as f:
 
 setup(
    name='spalla',
-   version='1.2',
+   version='1.3',
    description='programma per verifiche Liceo Ariosto Spallanzani',
    license="MIT",
    long_description=long_description,
